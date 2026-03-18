@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Calculator</title>
+<title>Smart Calculator Pro</title>
 
 <style>
 body {
@@ -15,26 +15,39 @@ body {
     height: 100vh;
 }
 
-/* Card */
 .calculator {
-    width: 320px;
+    width: 330px;
     background: #1e293b;
     border-radius: 20px;
     padding: 15px;
 }
 
+/* Ads */
+.ad {
+    text-align: center;
+    margin: 8px 0;
+}
+
 /* Screen */
 #screen {
     width: 100%;
-    height: 70px;
-    font-size: 28px;
+    height: 60px;
+    font-size: 24px;
     border-radius: 10px;
     border: none;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     text-align: right;
     padding: 10px;
-    background: #0f172a;
-    color: white;
+    background: #020617;
+    color: #fff;
+}
+
+/* History */
+#history {
+    font-size: 14px;
+    color: #94a3b8;
+    text-align: right;
+    margin-bottom: 10px;
 }
 
 /* Buttons */
@@ -45,8 +58,8 @@ body {
 }
 
 button {
-    padding: 16px;
-    font-size: 18px;
+    padding: 15px;
+    font-size: 17px;
     border-radius: 10px;
     border: none;
     background: #334155;
@@ -57,12 +70,6 @@ button {
 .equal { background: #22c55e; }
 .clear { background: #ef4444; }
 .back { background: #f59e0b; }
-
-/* Ads */
-.ad {
-    margin: 10px 0;
-    text-align: center;
-}
 </style>
 </head>
 
@@ -72,9 +79,10 @@ button {
 
 <!-- TOP AD -->
 <div class="ad">
-<iframe src="YOUR_ADSTERA_DIRECT_LINK" width="300" height="50"></iframe>
+<iframe src="YOUR_AD_LINK" width="300" height="50"></iframe>
 </div>
 
+<div id="history"></div>
 <input id="screen" readonly>
 
 <div class="buttons">
@@ -94,16 +102,18 @@ button {
     <button class="op" onclick="press('-')">−</button>
 
     <button onclick="press('0')">0</button>
-    <button class="back" onclick="back()">⌫</button>
-    <button class="equal" onclick="calc()">=</button>
+    <button onclick="press('.')">.</button>
+    <button onclick="press('%')">%</button>
     <button class="op" onclick="press('+')">+</button>
 
-    <button class="clear" onclick="clearScr()" style="grid-column: span 4;">Clear</button>
+    <button class="back" onclick="back()">⌫</button>
+    <button class="equal" onclick="calc()">=</button>
+    <button class="clear" onclick="clearScr()" style="grid-column: span 2;">Clear</button>
 </div>
 
 <!-- BOTTOM AD -->
 <div class="ad">
-<iframe src="YOUR_ADSTERA_DIRECT_LINK" width="300" height="50"></iframe>
+<iframe src="YOUR_AD_LINK" width="300" height="50"></iframe>
 </div>
 
 </div>
@@ -124,8 +134,16 @@ function back(){
 
 function calc(){
     try{
-        let result = new Function("return " + document.getElementById("screen").value)();
+        let exp = document.getElementById("screen").value;
+
+        // % handling
+        exp = exp.replace(/(\d+)%/g, "($1/100)");
+
+        let result = new Function("return " + exp)();
+
+        document.getElementById("history").innerText = exp + " =";
         document.getElementById("screen").value = result;
+
     } catch {
         document.getElementById("screen").value = "Error";
     }
