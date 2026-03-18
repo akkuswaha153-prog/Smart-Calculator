@@ -26,6 +26,8 @@ body {
 .ad {
     text-align: center;
     margin: 8px 0;
+    color: #94a3b8;
+    font-size: 12px;
 }
 
 /* Screen */
@@ -44,10 +46,10 @@ body {
 
 /* History */
 #history {
-    font-size: 14px;
+    font-size: 13px;
     color: #94a3b8;
     text-align: right;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 /* Buttons */
@@ -58,8 +60,8 @@ body {
 }
 
 button {
-    padding: 15px;
-    font-size: 17px;
+    padding: 14px;
+    font-size: 16px;
     border-radius: 10px;
     border: none;
     background: #334155;
@@ -70,6 +72,7 @@ button {
 .equal { background: #22c55e; }
 .clear { background: #ef4444; }
 .back { background: #f59e0b; }
+.info { background: #64748b; }
 </style>
 </head>
 
@@ -79,13 +82,16 @@ button {
 
 <!-- TOP AD -->
 <div class="ad">
-<iframe src="YOUR_AD_LINK" width="300" height="50"></iframe>
+    <div id="adTop">Ad loading...</div>
+    <iframe src="YOUR_AD_LINK" width="300" height="50"
+    onload="document.getElementById('adTop').innerText=''"></iframe>
 </div>
 
 <div id="history"></div>
 <input id="screen" readonly>
 
 <div class="buttons">
+
     <button onclick="press('7')">7</button>
     <button onclick="press('8')">8</button>
     <button onclick="press('9')">9</button>
@@ -103,17 +109,24 @@ button {
 
     <button onclick="press('0')">0</button>
     <button onclick="press('.')">.</button>
-    <button onclick="press('%')">%</button>
+    <button onclick="percent()">%</button>
     <button class="op" onclick="press('+')">+</button>
 
+    <button onclick="square()">x²</button>
+    <button onclick="sqrt()">√</button>
     <button class="back" onclick="back()">⌫</button>
     <button class="equal" onclick="calc()">=</button>
+
     <button class="clear" onclick="clearScr()" style="grid-column: span 2;">Clear</button>
+    <button class="info" onclick="about()">About</button>
+
 </div>
 
 <!-- BOTTOM AD -->
 <div class="ad">
-<iframe src="YOUR_AD_LINK" width="300" height="50"></iframe>
+    <div id="adBottom">Ad loading...</div>
+    <iframe src="YOUR_AD_LINK" width="300" height="50"
+    onload="document.getElementById('adBottom').innerText=''"></iframe>
 </div>
 
 </div>
@@ -132,21 +145,34 @@ function back(){
     document.getElementById("screen").value = s.slice(0,-1);
 }
 
+function percent(){
+    let val = document.getElementById("screen").value;
+    document.getElementById("screen").value = val/100;
+}
+
+function square(){
+    let val = document.getElementById("screen").value;
+    document.getElementById("screen").value = val*val;
+}
+
+function sqrt(){
+    let val = document.getElementById("screen").value;
+    document.getElementById("screen").value = Math.sqrt(val);
+}
+
 function calc(){
     try{
         let exp = document.getElementById("screen").value;
-
-        // % handling
-        exp = exp.replace(/(\d+)%/g, "($1/100)");
-
         let result = new Function("return " + exp)();
-
         document.getElementById("history").innerText = exp + " =";
         document.getElementById("screen").value = result;
-
     } catch {
         document.getElementById("screen").value = "Error";
     }
+}
+
+function about(){
+    alert("Smart Calculator Pro\nVersion 1.0\n\nFast, simple and secure calculator.\nNo data is collected.");
 }
 </script>
 
