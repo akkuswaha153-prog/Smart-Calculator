@@ -15,13 +15,12 @@ body {
     height: 100vh;
 }
 
-/* Card UI */
+/* Card */
 .calculator {
     width: 320px;
     background: #1e293b;
     border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    padding: 15px;
 }
 
 /* Screen */
@@ -29,50 +28,52 @@ body {
     width: 100%;
     height: 70px;
     font-size: 28px;
-    border-radius: 12px;
+    border-radius: 10px;
     border: none;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-align: right;
     padding: 10px;
     background: #0f172a;
-    color: #fff;
-}
-
-/* Grid */
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    color: white;
 }
 
 /* Buttons */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
 button {
-    padding: 18px;
+    padding: 16px;
     font-size: 18px;
-    border-radius: 12px;
+    border-radius: 10px;
     border: none;
     background: #334155;
     color: white;
-    transition: 0.2s;
 }
 
-button:active {
-    transform: scale(0.92);
-    background: #475569;
-}
-
-/* Colors */
 .op { background: #3b82f6; }
 .equal { background: #22c55e; }
 .clear { background: #ef4444; }
 .back { background: #f59e0b; }
 
+/* Ads */
+.ad {
+    margin: 10px 0;
+    text-align: center;
+}
 </style>
 </head>
 
 <body>
 
 <div class="calculator">
+
+<!-- TOP AD -->
+<div class="ad">
+<iframe src="YOUR_ADSTERA_DIRECT_LINK" width="300" height="50"></iframe>
+</div>
 
 <input id="screen" readonly>
 
@@ -100,36 +101,28 @@ button:active {
     <button class="clear" onclick="clearScr()" style="grid-column: span 4;">Clear</button>
 </div>
 
+<!-- BOTTOM AD -->
+<div class="ad">
+<iframe src="YOUR_ADSTERA_DIRECT_LINK" width="300" height="50"></iframe>
 </div>
 
-<!-- Sound -->
-<audio id="clickSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
+</div>
 
 <script>
-function playSound(){
-    let sound = document.getElementById("clickSound");
-    sound.currentTime = 0;
-    sound.play();
-}
-
 function press(val){
-    playSound();
     document.getElementById("screen").value += val;
 }
 
 function clearScr(){
-    playSound();
     document.getElementById("screen").value = "";
 }
 
 function back(){
-    playSound();
     let s = document.getElementById("screen").value;
     document.getElementById("screen").value = s.slice(0,-1);
 }
 
 function calc(){
-    playSound();
     try{
         let result = new Function("return " + document.getElementById("screen").value)();
         document.getElementById("screen").value = result;
